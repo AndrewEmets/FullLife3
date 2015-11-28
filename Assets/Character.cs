@@ -12,7 +12,7 @@ public class Character : MonoBehaviour
         get { return hunger; }
         set
         {
-            //if (hunger < MaxHunger)
+            if (hunger < MaxHunger)
             {
                 hunger = value;
 
@@ -31,6 +31,8 @@ public class Character : MonoBehaviour
     public float MaxHunger = 10;
     private UnityEvent OnHungerFilled;
     #endregion
+
+    public GameObject attackPrefab;
 
     void Awake()
     {
@@ -53,6 +55,12 @@ public class Character : MonoBehaviour
         Debug.Log(Hunger);
         Hunger += value;
         Debug.Log(Hunger);
+    }
+
+    public void Attack(Vector2 direction)
+    {
+        GameObject.Instantiate(attackPrefab, transform.position, Quaternion.Euler(0,0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
+
     }
 
     void Die()

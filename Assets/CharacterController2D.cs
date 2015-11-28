@@ -8,10 +8,12 @@ public class CharacterController2D : MonoBehaviour
     private Rigidbody2D rigidBody;
 
     private Vector2 movingDirection;
+    private Character character;
 
     void Awake()
     {
         rigidBody = GetComponentInChildren<Rigidbody2D>();
+        character = GetComponent<Character>();
     }
 
     void Update()
@@ -29,6 +31,21 @@ public class CharacterController2D : MonoBehaviour
         if (dir .magnitude > 0)
             movingDirection = dir.normalized;
 
-        Debug.DrawRay(transform.position, dir, Color.black, 0.2f);
+        Debug.DrawRay(transform.position, movingDirection, Color.black, 0.2f);
+
+        if (movingDirection.x < 0 && transform.localScale.x > 0)
+        {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+
+        if (movingDirection.x > 0 && transform.localScale.x < 0)
+        {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            character.Attack(movingDirection);
+        }
     }
 }
