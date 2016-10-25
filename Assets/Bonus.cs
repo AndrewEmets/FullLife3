@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class Bonus : MonoBehaviour
 {
-    private Renderer renderer;
-    private Collider2D collider;
+    private new Renderer renderer;
+    private new Collider2D collider;
 
     public float time = 0;
     private float endTime;
@@ -34,6 +34,7 @@ public abstract class Bonus : MonoBehaviour
         
         isAplied = true;
         appliedTo = character;
+        character.BonusGet();
     }
 
     protected virtual void DeclineBonus(Character character)

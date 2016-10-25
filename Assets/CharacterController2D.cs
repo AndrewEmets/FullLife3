@@ -6,6 +6,7 @@ public class CharacterController2D : MonoBehaviour
     public float Speed;
 
     private Rigidbody2D rigidBody;
+    private Animator animator;
 
     private Vector2 movingDirection;
     private Character character;
@@ -14,6 +15,7 @@ public class CharacterController2D : MonoBehaviour
     {
         rigidBody = GetComponentInChildren<Rigidbody2D>();
         character = GetComponent<Character>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -47,5 +49,7 @@ public class CharacterController2D : MonoBehaviour
         {
             character.Attack(movingDirection);
         }
+
+        animator.SetFloat("absSpeed", dir.magnitude);
     }
 }

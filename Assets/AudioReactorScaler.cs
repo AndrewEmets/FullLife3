@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AudioReactor : MonoBehaviour {
+public class AudioReactorScaler : MonoBehaviour
+{
+    public AudioSource audio;
 
-    public new AudioSource audio;
+    SpriteRenderer renderer;
 
-    new SpriteRenderer renderer;
-
-    public Color startColor;
-    public Color finalColor;
+    public float startScale;
+    public float finalScale;
 
     float[] Samples = new float[128];
     public float t;
@@ -18,8 +18,13 @@ public class AudioReactor : MonoBehaviour {
         renderer = GetComponent<SpriteRenderer>();
     }
 
-    public float min;
-    public float max;
+    void Start()
+    {
+        
+    }
+
+    public float min = -0.01f;
+    public float max = 0.01f;
     public float sum;
 
     void Update()
@@ -30,19 +35,17 @@ public class AudioReactor : MonoBehaviour {
 
         for (int i = 0; i < Samples.Length; i++)
         {
-            sum += Samples[i]*Samples[i];
+            sum += Samples[i] * Samples[i];
         }
 
         sum = Mathf.Sqrt(sum);
-        sum /= Samples.Length;
+        sum /= (Samples.Length);
 
         if (sum < min) min = sum;
         if (sum > max) max = sum;
 
         t = (sum - min) / (max - min);
 
-        var currentColor = Color.Lerp(startColor, finalColor, t);
-        renderer.color = currentColor;
+        transform.localScale = Vector3.one*Mathf.Lerp(startScale, finalScale, t);
     }
-	
 }
